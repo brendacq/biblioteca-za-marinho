@@ -1,9 +1,25 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ReadersModule } from './readers/readers.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
+  imports: [
+    ReadersModule,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.MYSQL_DATABASE_HOST,
+      port: parseInt(process.env.MYSQL_DATABASE_PORT),
+      database: process.env.MYSQL_DATABASE,
+      username: process.env.MYSQL_DATABASE_USER,
+      password: process.env.MYSQL_DATABASE_PASSWORD,
+      entities: ['dist/**/*.entity.js'],
+      synchronize: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
