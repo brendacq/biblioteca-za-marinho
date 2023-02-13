@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { LiteraryWorksService } from './literary-works.service';
 import { CreateLiteraryWorkDto } from './dto/create-literary-work.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Literary works')
 @Controller('literary-works')
 export class LiteraryWorksController {
   constructor(private readonly literaryWorksService: LiteraryWorksService) {}

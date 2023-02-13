@@ -1,13 +1,18 @@
-export class CreateLiteraryWorkDto {
-  code: string;
+import { ApiProperty } from '@nestjs/swagger';
 
+export class CreateLiteraryWorkDto {
+  @ApiProperty()
   title: string;
 
+  @ApiProperty()
   category: string;
 
-  authors: string[];
+  @ApiProperty()
+  authors: string;
 
-  keywords: string[];
+  @ApiProperty()
+  keywords: string;
 
+  @ApiProperty()
   editor: string;
 }

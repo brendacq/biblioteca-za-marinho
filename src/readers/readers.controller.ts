@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 import { ReadersService } from './readers.service';
 import { CreateReaderDto } from './dto/create-reader.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Readers')
 @Controller('readers')
 export class ReadersController {
   constructor(private readonly readersService: ReadersService) {}
