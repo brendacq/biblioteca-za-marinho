@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ReadersModule } from './readers/readers.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { LiteraryWorksModule } from './literary-works/literary-works.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
       entities: ['dist/**/*.entity.js'],
       synchronize: true,
     }),
+    LiteraryWorksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
