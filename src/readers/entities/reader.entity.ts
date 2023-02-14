@@ -1,34 +1,36 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-@Entity()
+export type ReaderDocument = HydratedDocument<Reader>;
+
+@Schema()
 export class Reader {
-  @PrimaryColumn()
+  @Prop()
   id: string;
 
-  @Column()
+  @Prop()
   name: string;
 
-  @Column()
+  @Prop()
   address: string;
 
-  @Column()
+  @Prop()
   city: string;
 
-  @Column()
+  @Prop()
   uf: string;
 
-  @Column()
+  @Prop()
   phone: string;
 
-  @Column()
+  @Prop()
   email: string;
 
-  @Column()
+  @Prop()
   documentNumber: string;
 
-  @Column()
+  @Prop()
   category: string; //TODO: change this to reader category type
-
-  @Column()
-  birthday: Date;
 }
+
+export const ReaderSchema = SchemaFactory.createForClass(Reader);

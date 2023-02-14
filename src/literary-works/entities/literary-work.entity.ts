@@ -1,22 +1,26 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-@Entity()
+export type LiteraryWorkDocument = HydratedDocument<LiteraryWork>;
+@Schema()
 export class LiteraryWork {
-  @PrimaryColumn()
+  @Prop()
   code: string;
 
-  @Column()
+  @Prop()
   title: string;
 
-  @Column()
+  @Prop()
   category: string;
 
-  @Column()
+  @Prop()
   authors: string;
 
-  @Column()
+  @Prop()
   editor: string;
 
-  @Column()
+  @Prop()
   status: string;
 }
+
+export const LiteraryWorkSchema = SchemaFactory.createForClass(LiteraryWork);
