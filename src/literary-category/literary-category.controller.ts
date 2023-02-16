@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { LiteraryCategoryService } from './literary-category.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LiteraryCategory } from './entities/literary-category.entity';
@@ -15,6 +23,11 @@ export class LiteraryCategoryController {
     return this.literaryCategoryService.create(createLiteraryCategory);
   }
 
+  @Put()
+  update(@Body() updateCategory: LiteraryCategory) {
+    return this.literaryCategoryService.update(updateCategory);
+  }
+
   @Get()
   findAll() {
     return this.literaryCategoryService.findAll();
@@ -22,7 +35,7 @@ export class LiteraryCategoryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // return this.literaryCategoryService.findOne(+id);
+    return this.literaryCategoryService.findOne(id);
   }
 
   @Delete(':id')

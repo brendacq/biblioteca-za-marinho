@@ -29,12 +29,39 @@ export class LiteraryCategoryService {
     }
   }
 
-  findAll() {
-    return `This action returns all literaryCategory`;
+  async update(category: LiteraryCategory) {
+    try {
+      const validCategory = LITERARY_WORKS_CATEGORY[category.description];
+
+      if (validCategory) {
+        const response = await this.literaryCategoryRepository.update({
+          ...category,
+          description: validCategory,
+        });
+        return response;
+      }
+      throw new Error('Categoria inválida');
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} literaryCategory`;
+  async findAll() {
+    try {
+      const response = this.literaryCategoryRepository.findAll();
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async findOne(id: string) {
+    try {
+      const response = this.literaryCategoryRepository.findOne(id);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async remove(id: string) {
