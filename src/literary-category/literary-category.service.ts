@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { LiteraryCategory } from './entities/literary-category.entity';
 import { LiteraryCategoryRepository } from './literary-category.repository';
 import { LITERARY_WORKS_CATEGORY } from '../shared/constants';
@@ -10,40 +10,31 @@ export class LiteraryCategoryService {
   ) {}
 
   async create(createLiteraryCategory: LiteraryCategory) {
-    try {
-      const validCategory =
-        LITERARY_WORKS_CATEGORY[createLiteraryCategory.description];
+    const validCategory = LITERARY_WORKS_CATEGORY.includes(
+      createLiteraryCategory.description,
+    );
 
-      if (validCategory) {
-        const response = await this.literaryCategoryRepository.create({
-          ...createLiteraryCategory,
-          description: validCategory,
-        });
+    if (!validCategory) throw new BadRequestException('Categoria inválida');
 
-        return response;
-      }
+    const response = await this.literaryCategoryRepository.create({
+      ...createLiteraryCategory,
+    });
 
-      throw new Error('Categoria inválida');
-    } catch (error) {
-      throw new Error(error);
-    }
+    return response;
   }
 
   async update(category: LiteraryCategory) {
-    try {
-      const validCategory = LITERARY_WORKS_CATEGORY[category.description];
+    const validCategory = LITERARY_WORKS_CATEGORY.includes(
+      category.description,
+    );
 
-      if (validCategory) {
-        const response = await this.literaryCategoryRepository.update({
-          ...category,
-          description: validCategory,
-        });
-        return response;
-      }
-      throw new Error('Categoria inválida');
-    } catch (error) {
-      throw new Error(error);
-    }
+    if (!validCategory) throw new BadRequestException('Categoria inválida');
+
+    const response = await this.literaryCategoryRepository.update({
+      ...category,
+    });
+
+    return response;
   }
 
   async findAll() {
@@ -58,9 +49,10 @@ export class LiteraryCategoryService {
   async findOne(id: string) {
     try {
       const response = this.literaryCategoryRepository.findOne(id);
+
       return response;
     } catch (error) {
-      throw new Error(error);
+      return error;
     }
   }
 
