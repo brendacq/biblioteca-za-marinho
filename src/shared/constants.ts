@@ -16,3 +16,10 @@ export const READER_CATEGORY = [
   'Funcionário',
   'Usuário externo',
 ];
+
+export enum LiteraryStatusEnum {
+  available = 'Disponível para empréstimo',
+  reserved = 'Reservado',
+  lent = 'Emprestado',
+  unavailable = 'Indisponível',
+}
