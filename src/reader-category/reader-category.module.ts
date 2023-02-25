@@ -3,14 +3,16 @@ import { ReaderCategoryController } from './reader-category.controller';
 import { ReaderCategoryService } from './reader-category.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReaderCategorySchema } from './entities/reader-category.entity';
+import { ReadersRepository } from '../readers/readers.repository';
+import { ReaderCategoryRepository } from './reader-category.repository';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'reader_category', schema: ReaderCategorySchema },
+      { name: 'Reader_category', schema: ReaderCategorySchema },
     ]),
   ],
   controllers: [ReaderCategoryController],
-  providers: [ReaderCategoryService],
+  providers: [ReaderCategoryRepository, ReaderCategoryService],
 })
 export class ReaderCategoryModule {}

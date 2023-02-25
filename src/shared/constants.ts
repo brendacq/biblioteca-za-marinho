@@ -9,10 +9,10 @@ export const LITERARY_WORKS_CATEGORY = [
   'Dissertação de mestrado',
 ];
 
-export enum READER_CATEGORY {
-  gradStudent = 'Aluno de graduação',
-  postGradStudent = 'Aluno de pós-graduação',
-  professor = 'Professor',
-  employee = 'Funcionário',
-  external_user = 'Usuário externo',
-}
+export const READER_CATEGORY = [
+  'Aluno de graduação',
+  'Aluno de pós-graduação',
+  'Professor',
+  'Funcionário',
+  'Usuário externo',
+];

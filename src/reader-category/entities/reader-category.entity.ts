@@ -1,17 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { READER_CATEGORY } from 'src/shared/constants';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type ReaderCategoryDocument = HydratedDocument<ReaderCategory>;
 
 @Schema()
 export class ReaderCategory {
+  @ApiProperty()
   @Prop()
-  code: number;
+  description: string;
 
-  @Prop()
-  description: READER_CATEGORY;
-
+  @ApiProperty()
   @Prop()
   maxLoanDays: number;
 }
