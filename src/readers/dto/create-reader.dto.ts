@@ -1,30 +1,38 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ReaderCategory } from '../../reader-category/entities/reader-category.entity';
 
-export class CreateReaderDto {
+export class Address {
   @ApiProperty()
-  name: string;
-
-  @ApiProperty()
-  address: string;
+  addressLine: string;
 
   @ApiProperty()
   city: string;
 
   @ApiProperty()
   uf: string;
+}
 
+export class ContactInfo {
   @ApiProperty()
   phone: string;
 
   @ApiProperty()
   email: string;
+}
+
+export class CreateReaderDto {
+  @ApiProperty()
+  name: string;
 
   @ApiProperty()
-  documentNumber: string;
+  address: Address;
 
   @ApiProperty()
-  category: string;
+  contact: ContactInfo;
 
   @ApiProperty()
-  birthday: Date;
+  documentNumber: number;
+
+  @ApiProperty()
+  category: ReaderCategory;
 }

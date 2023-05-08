@@ -1,25 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateReaderDto } from './dto/create-reader.dto';
+import { ReadersRepository } from './readers.repository';
+import { READER_CATEGORY } from '../shared/constants';
+import { ReaderCategoryService } from '../reader-category/reader-category.service';
 
 @Injectable()
 export class ReadersService {
-  create(createReaderDto: CreateReaderDto) {
-    return 'This action adds a new reader';
+  constructor(
+    private readonly readersRepository: ReadersRepository,
+    private readonly readersCategoryService: ReaderCategoryService,
+  ) {}
+
+  async create(createReaderDto: CreateReaderDto) {
+    const validCategory = this.readersCategoryService.validateCategory(
+      createReaderDto.category.description,
+    );
+
+    if (!validCategory) throw new BadRequestException('Categoria inválida!');
+
+    const reader = {
+      ...createReaderDto,
+      category: READER_CATEGORY[createReaderDto.category.description],
+    };
+
+    try {
+      const createReader = await this.readersRepository.create(reader);
+      return createReader;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all readers`;
+  async findAll() {
+    const response = await this.readersRepository.findAll();
+
+    return response;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reader`;
+  async findOne(id: string) {
+    const response = await this.readersRepository.findById(id);
+
+    return response;
   }
 
-  update(id: number) {
-    return `This action updates a #${id} reader`;
+  async update(id: string, reader: CreateReaderDto) {
+    const response = await this.readersRepository.update(id, reader);
+
+    return response;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} reader`;
+  async remove(id: string) {
+    const response = await this.readersRepository.remove(id);
+    return response;
   }
 }

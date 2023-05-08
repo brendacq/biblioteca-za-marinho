@@ -1,36 +1,45 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { READER_CATEGORY } from '../../shared/constants';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export type ReaderDocument = HydratedDocument<Reader>;
 
-@Schema()
-export class Reader {
+class Address {
   @Prop()
-  id: string;
-
-  @Prop()
-  name: string;
-
-  @Prop()
-  address: string;
+  addressLine: string;
 
   @Prop()
   city: string;
 
   @Prop()
   uf: string;
+}
 
+class ContactInfo {
   @Prop()
   phone: string;
 
-  @Prop()
+  @ApiPropertyOptional()
   email: string;
+}
 
-  @Prop()
-  documentNumber: string;
+@Schema()
+export class Reader {
+  @Prop({ type: String })
+  name: string;
 
-  @Prop()
-  category: string; //TODO: change this to reader category type
+  @Prop({ type: String })
+  address: Address;
+
+  @Prop({ type: String })
+  contact: ContactInfo;
+
+  @Prop({ type: Number })
+  documentNumber: number;
+
+  @Prop({ type: READER_CATEGORY })
+  category: string;
 }
 
 export const ReaderSchema = SchemaFactory.createForClass(Reader);

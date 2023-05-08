@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ReadersService } from './readers.service';
 import { CreateReaderDto } from './dto/create-reader.dto';
@@ -28,11 +29,16 @@ export class ReadersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.readersService.findOne(+id);
+    return this.readersService.findOne(id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() reader: CreateReaderDto) {
+    return this.readersService.update(id, reader);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.readersService.remove(+id);
+    return this.readersService.remove(id);
   }
 }
