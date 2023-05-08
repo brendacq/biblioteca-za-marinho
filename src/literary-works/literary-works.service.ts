@@ -1,26 +1,105 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateLiteraryWorkDto } from './dto/create-literary-work.dto';
 import { LiteraryWork } from './entities/literary-work.entity';
+import { LiteraryWorksRepository } from './literary-works.repository';
+import { LiteraryCategoryRepository } from 'src/literary-category/literary-category.repository';
+import { LiteraryStatusEnum } from 'src/shared/constants';
+import { LiteraryCategoryService } from 'src/literary-category/literary-category.service';
 
 @Injectable()
 export class LiteraryWorksService {
-  create(createLiteraryWorkDto: CreateLiteraryWorkDto) {
-    return 'This action adds a new literaryWork';
+  constructor(
+    private readonly literaryWorksRepository: LiteraryWorksRepository,
+    private readonly literaryCategoryRepository: LiteraryCategoryRepository,
+    private readonly literaryCategoryService: LiteraryCategoryService,
+  ) {}
+
+  async create(
+    createLiteraryWorkDto: CreateLiteraryWorkDto,
+  ): Promise<LiteraryWork> {
+    try {
+      const validCategory = this.literaryCategoryService.validateCategory(
+        createLiteraryWorkDto.category.description,
+      );
+
+      if (validCategory) {
+        const response = await this.literaryWorksRepository.create({
+          ...createLiteraryWorkDto,
+          status: LiteraryStatusEnum.available,
+        });
+        return response;
+      }
+
+      throw new BadRequestException('Categoria inválida!');
+    } catch (error) {
+      return error;
+    }
   }
 
-  findAll() {
-    return `This action returns all literaryWorks`;
+  async findAll(): Promise<LiteraryWork[]> {
+    try {
+      const response = await this.literaryWorksRepository.findAll();
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} literaryWork`;
+  async findAmount(title: string): Promise<any> {
+    try {
+      const literaryWorks = await this.literaryWorksRepository.findByTitle(
+        title,
+      );
+      const amount = literaryWorks.length;
+      return { literaryWorks, amount };
+    } catch (error) {
+      return error;
+    }
   }
 
-  update(id: number) {
-    return `This action updates a #${id} literaryWork`;
+  async findOne(id: string): Promise<LiteraryWork> {
+    try {
+      const response = await this.literaryWorksRepository.findOne(id);
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} literaryWork`;
+  async update(
+    id: string,
+    literaryWork: CreateLiteraryWorkDto,
+  ): Promise<CreateLiteraryWorkDto> {
+    try {
+      const response = await this.literaryWorksRepository.update(
+        id,
+        literaryWork,
+      );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async setStatus(id: string, status: string) {
+    try {
+      const response = await this.literaryWorksRepository.updateStatus(
+        id,
+        LiteraryStatusEnum[status],
+      );
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      const response = await this.literaryWorksRepository.delete(id);
+      return response;
+    } catch (error) {
+      return error;
+    }
   }
 }

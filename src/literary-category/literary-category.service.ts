@@ -10,7 +10,7 @@ export class LiteraryCategoryService {
   ) {}
 
   async create(createLiteraryCategory: LiteraryCategory) {
-    const validCategory = LITERARY_WORKS_CATEGORY.includes(
+    const validCategory = this.validateCategory(
       createLiteraryCategory.description,
     );
 
@@ -21,6 +21,12 @@ export class LiteraryCategoryService {
     });
 
     return response;
+  }
+
+  async validateCategory(category: string) {
+    const validCategory = LITERARY_WORKS_CATEGORY.includes(category);
+
+    return validCategory;
   }
 
   async update(category: LiteraryCategory) {

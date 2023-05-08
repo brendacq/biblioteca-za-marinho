@@ -1,25 +1,26 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { LiteraryCategory } from '../../literary-category/entities/literary-category.entity';
 
 export type LiteraryWorkDocument = HydratedDocument<LiteraryWork>;
 @Schema()
 export class LiteraryWork {
-  @Prop()
-  code: string;
-
-  @Prop()
+  @Prop({ type: String })
   title: string;
 
-  @Prop()
-  category: string;
+  @Prop({ type: LiteraryCategory })
+  category: LiteraryCategory;
 
-  @Prop()
-  authors: string;
+  @Prop({ type: [String] })
+  authors: string[];
 
-  @Prop()
-  editor: string;
+  @Prop({ type: [String] })
+  keywords: string[];
 
-  @Prop()
+  @Prop({ type: String })
+  publishingCompany: string;
+
+  @Prop({ type: String })
   status: string;
 }
 

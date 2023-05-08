@@ -13,5 +13,6 @@ import { LiteraryCategoryRepository } from './literary-category.repository';
   ],
   controllers: [LiteraryCategoryController],
   providers: [LiteraryCategoryRepository, LiteraryCategoryService],
+  exports: [LiteraryCategoryService],
 })
 export class LiteraryCategoryModule {}

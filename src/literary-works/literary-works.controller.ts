@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { LiteraryWorksService } from './literary-works.service';
 import { CreateLiteraryWorkDto } from './dto/create-literary-work.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -20,11 +28,19 @@ export class LiteraryWorksController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.literaryWorksService.findOne(+id);
+    return this.literaryWorksService.findOne(id);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateLiteraryWork: CreateLiteraryWorkDto,
+  ) {
+    return this.literaryWorksService.update(id, updateLiteraryWork);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.literaryWorksService.remove(+id);
+    return this.literaryWorksService.remove(id);
   }
 }

@@ -1,18 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { LiteraryCategory } from '../../literary-category/entities/literary-category.entity';
 
 export class CreateLiteraryWorkDto {
   @ApiProperty()
   title: string;
 
   @ApiProperty()
-  category: string;
+  category: LiteraryCategory;
 
   @ApiProperty()
-  authors: string;
+  authors: string[];
 
   @ApiProperty()
-  keywords: string;
+  keywords: string[];
 
   @ApiProperty()
-  editor: string;
+  publishingCompany: string;
 }
