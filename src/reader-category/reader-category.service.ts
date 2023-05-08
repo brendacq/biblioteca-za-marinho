@@ -10,7 +10,7 @@ export class ReaderCategoryService {
   ) {}
 
   async save(category: ReaderCategory) {
-    const validCategory = READER_CATEGORY.includes(category.description);
+    const validCategory = this.validateCategory(category.description);
 
     if (!validCategory) throw new BadRequestException('Categoria inválida');
 
@@ -20,6 +20,12 @@ export class ReaderCategoryService {
     } catch (error) {
       return error;
     }
+  }
+
+  validateCategory(category: string) {
+    const validCategory = READER_CATEGORY.includes(category);
+
+    return validCategory;
   }
 
   async findAll() {

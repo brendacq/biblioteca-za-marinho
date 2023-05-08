@@ -16,6 +16,18 @@ export class EmployeesService {
     }
   }
 
+  async findAll() {
+    const response = this.employeeRepository.findAll();
+
+    return response;
+  }
+
+  async findBy(name: string) {
+    const response = this.employeeRepository.findByName(name);
+
+    return response;
+  }
+
   async update(id: string, employee: Employee) {
     try {
       const response = this.employeeRepository.update(id, employee);

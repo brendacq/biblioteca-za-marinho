@@ -14,5 +14,6 @@ import { ReaderCategoryRepository } from './reader-category.repository';
   ],
   controllers: [ReaderCategoryController],
   providers: [ReaderCategoryRepository, ReaderCategoryService],
+  exports: [ReaderCategoryService],
 })
 export class ReaderCategoryModule {}

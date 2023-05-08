@@ -32,6 +32,16 @@ export class EmployeesRepository {
     }
   }
 
+  async findAll() {
+    try {
+      const employees = await this.employeeModel.find();
+
+      return employees;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async findById(id: string) {
     try {
       const employee = await this.employeeModel.findById(id);

@@ -2,15 +2,14 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateLiteraryWorkDto } from './dto/create-literary-work.dto';
 import { LiteraryWork } from './entities/literary-work.entity';
 import { LiteraryWorksRepository } from './literary-works.repository';
-import { LiteraryCategoryRepository } from 'src/literary-category/literary-category.repository';
-import { LiteraryStatusEnum } from 'src/shared/constants';
-import { LiteraryCategoryService } from 'src/literary-category/literary-category.service';
+import { LiteraryCategoryRepository } from '../literary-category/literary-category.repository';
+import { LiteraryStatusEnum } from '../shared/constants';
+import { LiteraryCategoryService } from '../literary-category/literary-category.service';
 
 @Injectable()
 export class LiteraryWorksService {
   constructor(
     private readonly literaryWorksRepository: LiteraryWorksRepository,
-    private readonly literaryCategoryRepository: LiteraryCategoryRepository,
     private readonly literaryCategoryService: LiteraryCategoryService,
   ) {}
 

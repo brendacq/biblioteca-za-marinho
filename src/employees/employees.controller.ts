@@ -23,6 +23,20 @@ export class EmployeesController {
     return response;
   }
 
+  @Get()
+  findAll() {
+    const response = this.employeesService.findAll();
+
+    return response;
+  }
+
+  @Get('search')
+  findByName(@Query('name') name: string) {
+    const response = this.employeesService.findBy(name);
+
+    return response;
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() employee: Employee) {
     const response = this.employeesService.update(id, employee);
